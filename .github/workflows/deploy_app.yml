@@ -17,13 +17,13 @@ jobs:
       - name: Configure SSH
         run: |
           mkdir -p ~/.ssh/
-          echo "$SSH_KEY" > ~/.ssh/bastion.key
-          chmod 400 ~/.ssh/bastion.key
+          echo "$SSH_KEY" > bastion.key
+          chmod 400 bastion.key
           cat >>~/.ssh/config <<END
           Host bastion
             HostName $SSH_HOST_BASTION
             User $SSH_USER_BASTION
-            IdentityFile ~/.ssh/bastion.key
+            IdentityFile bastion.key
             StrictHostKeyChecking no
           END
         env:
