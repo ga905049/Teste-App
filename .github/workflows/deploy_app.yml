@@ -17,8 +17,6 @@ jobs:
       - name: Configure SSH
         run: |
           mkdir -p ~/.ssh/
-          touch ~/.ssh/known_hosts
-          touch ~/.ssh/known_hosts2
           echo "$SSH_KEY" > ~/.ssh/bastion.key
           chmod 600 ~/.ssh/bastion.key
           cat >>~/.ssh/config <<END
@@ -27,6 +25,7 @@ jobs:
             User $SSH_USER_BASTION
             IdentityFile ~/.ssh/bastion.key
             StrictHostKeyChecking no
+            UserKnownHostsFile /dev/null
           END
         env:
           SSH_USER_BASTION: "${{ secrets.SSH_USER_BASTION }}"
