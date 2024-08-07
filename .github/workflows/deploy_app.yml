@@ -33,8 +33,8 @@ jobs:
 
       - name: Deploy
         run: |
-          ssh bastion 'echo "$SSH_KEY_DOCKER_SERVER" > ~/.ssh/bastion.key;chmod 400 ~/.ssh/bastion.key'
-          ssh bastion 'ssh -i ~/.ssh/bastion.key ubuntu@"$SSH_HOST_DOCKER_SERVER" "git clone https://github.com/ga905049/Teste-App.git; cd Teste-App/; docker build -t teste-backend -f Dockerfile.backend ./backend; docker build -t teste-frontend -f Dockerfile.frontend ./frontend;docker run -d -p5500:5500 teste-backend;docker run -d -p3000:3000 teste-frontend"'
+          ssh bastion 'echo $SSH_KEY_DOCKER_SERVER > ~/.ssh/bastion.key;chmod 400 ~/.ssh/bastion.key'
+          ssh bastion 'ssh -i ~/.ssh/bastion.key ubuntu@$SSH_HOST_DOCKER_SERVER "git clone https://github.com/ga905049/Teste-App.git; cd Teste-App/; docker build -t teste-backend -f Dockerfile.backend ./backend; docker build -t teste-frontend -f Dockerfile.frontend ./frontend;docker run -d -p5500:5500 teste-backend;docker run -d -p3000:3000 teste-frontend"'
         env:
           SSH_KEY_DOCKER_SERVER: "${{ secrets.SSH_KEY_DOCKER_SERVER }}"
           SSH_HOST_DOCKER_SERVER: "${{ secrets.SSH_HOST_DOCKER_SERVER }}"
