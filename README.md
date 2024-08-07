@@ -1,14 +1,3 @@
-## Teste Técnico Cloud Engineer
-
-Este repositório contém o código de um pequeno app de lista de tarefas. As instruções para rodar essa aplicação utilizando Docker seguem abaixo. O teste em si está no último item desse README, mas recomendamos que tente rodar a aplicação localmente antes seguindo os passos abaixo.
-
-<!--ts-->
-  * [Pré-requisitos](#prerequisites)
-  * [Build local](#build)
-  * [Deploy local](#deploy)
-  * [Teste técnico](#test)
-<!--te-->
-
 ### Pré-requisitos<a name="prerequisites"></a>
 
 - Docker
@@ -55,6 +44,21 @@ No seu navegador, acesse `http://localhost:3000`, você deverá visualizar a seg
   <a href="http://deepesg.com/" target="blank"><img src="https://snipboard.io/tnBXDd.jpg" /></a>
 </p>
 
-### Teste Técnico<a name="test"></a>
+### CI/CD
 
-Feito o deploy da aplicação, siga as instruções do PDF enviado para execução do teste técnico. Lembrando que apenas a primeira atividade é obrigatória.
+O arquivo principal que configura a pipeline é o **app.yml** que está em **.github/workflows**. Para executar a pipeline basta fazer um push para a branch main.
+
+É necessário configurar as seguintes secrets no github:
+
+- SSH_KEY_BASTION: Chave privada para acesso a instância do Bastion.
+- SSH_HOST_BASTION: IP da instância do Bastion.
+- SSH_USER_BASTION: Usuário de acesso a instância do Bastion.
+- SSH_KEY_DOCKER_SERVER: Chave privada para acesso a instância do Docker.
+- SSH_HOST_DOCKER_SERVER: IP da instância do Docker.
+
+A pipeline possui os seguintes steps:
+
+- Configure SSH: Configura o SSH para acesso ao bastion.
+- Deploy: Realiza o deploy fazendo acesso ssh ao bastion e depois à instância do Docker e realizar o passos de build e start dos containers.
+- Test App: Realiza acesso ssh ao bastion e depois à instância do Docker e executa um teste de Curl para verificar se a aplicação esta respondendo 200.
+
