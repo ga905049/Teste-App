@@ -21,8 +21,8 @@ jobs:
           chmod 400 ~/.ssh/bastion.key
           cat >>~/.ssh/config <<END
           Host bastion
-            HostName $SSH_HOST
-            User $SSH_USER
+            HostName $SSH_HOST_BASTION
+            User $SSH_USER_BASTION
             IdentityFile ~/.ssh/bastion.key
             StrictHostKeyChecking no
           END
