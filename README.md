@@ -48,7 +48,13 @@ No seu navegador, acesse `http://localhost:3000`, você deverá visualizar a seg
 
 O arquivo principal que configura a pipeline é o **app.yml** que está em **.github/workflows**. Para executar a pipeline basta fazer um push para a branch main.
 
-Para que seja criado um job segregado para cada ambiente, foi configurado workspaces (Ex.: aws/prod).
+É necessário configurar as seguintes secrets no github:
+
+- SSH_KEY_BASTION: Chave privada para acesso a instância do Bastion.
+- SSH_HOST_BASTION: IP da instância do Bastion.
+- SSH_USER_BASTION: Usuário de acesso a instância do Bastion.
+- SSH_KEY_DOCKER_SERVER: Chave privada para acesso a instância do Docker.
+- SSH_HOST_DOCKER_SERVER: IP da instância do Docker.
 
 A pipeline possui os seguintes steps:
 
