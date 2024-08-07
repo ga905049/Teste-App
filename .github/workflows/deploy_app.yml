@@ -1,0 +1,40 @@
+name: 'Deploy App'
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+
+jobs:
+  deploy:
+    name: "Deploy App"
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Configure SSH
+        run: |
+          mkdir -p ~/.ssh/
+          echo "$SSH_KEY" > ~/.ssh/bastion.key
+          chmod 400 ~/.ssh/bastion.key
+          cat >>~/.ssh/config <<END
+          Host bastion
+            HostName $SSH_HOST
+            User $SSH_USER
+            IdentityFile ~/.ssh/bastion.key
+            StrictHostKeyChecking no
+          END
+        env:
+          SSH_USER_BASTION: "${{ secrets.SSH_USER_BASTION }}"
+          SSH_KEY_BASTION: "${{ secrets.SSH_KEY_BASTION }}"
+          SSH_HOST_BASTION: "${{ secrets.SSH_HOST_BASTION }}"
+
+      - name: Deploy
+        run: |
+          ssh bastion 'echo "$SSH_KEY_DOCKER_SERVER" > ~/.ssh/bastion.key;chmod 400 ~/.ssh/bastion.key'
+          ssh bastion 'ssh -i ~/.ssh/bastion.key ubuntu@"$SSH_HOST_DOCKER_SERVER" "git clone https://github.com/ga905049/Teste-App.git; cd Teste-App/; docker build -t teste-backend -f Dockerfile.backend ./backend; docker build -t teste-frontend -f Dockerfile.frontend ./frontend;docker run -d -p5500:5500 teste-backend;docker run -d -p3000:3000 teste-frontend"'
+        env:
+          SSH_KEY_DOCKER_SERVER: "${{ secrets.SSH_KEY_DOCKER_SERVER }}"
+          SSH_HOST_DOCKER_SERVER: "${{ secrets.SSH_HOST_DOCKER_SERVER }}"
