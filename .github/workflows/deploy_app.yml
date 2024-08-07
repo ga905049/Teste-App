@@ -27,9 +27,9 @@ jobs:
             StrictHostKeyChecking no
           END
         env:
-          SSH_USER_BASTION: "${{ secrets.SSH_USER_BASTION }}"
-          SSH_KEY_BASTION: "${{ secrets.SSH_KEY_BASTION }}"
-          SSH_HOST_BASTION: "${{ secrets.SSH_HOST_BASTION }}"
+          SSH_USER_BASTION: ${{ secrets.SSH_USER_BASTION }}
+          SSH_KEY_BASTION: ${{ secrets.SSH_KEY_BASTION }}
+          SSH_HOST_BASTION: ${{ secrets.SSH_HOST_BASTION }}
 
       - name: Deploy
         run: |
