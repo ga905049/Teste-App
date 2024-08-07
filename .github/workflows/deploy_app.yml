@@ -18,6 +18,7 @@ jobs:
         run: |
           mkdir -p ~/.ssh/
           touch ~/.ssh/known_hosts
+          touch ~/.ssh/known_hosts2
           echo "$SSH_KEY" > ~/.ssh/bastion.key
           chmod 600 ~/.ssh/bastion.key
           cat >>~/.ssh/config <<END
