@@ -17,7 +17,7 @@ jobs:
       - name: Configure SSH
         run: |
           mkdir -p ~/.ssh/
-          echo "$SSH_KEY" > ~/.ssh/bastion.key
+          echo "$SSH_KEY_BASTION" > ~/.ssh/bastion.key
           chmod 600 ~/.ssh/bastion.key
           cat >>~/.ssh/config <<END
           Host bastion
