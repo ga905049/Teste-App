@@ -17,7 +17,7 @@ jobs:
       - name: Configure SSH
         run: |
           mkdir -p ~/.ssh/
-          echo $SSH_KEY > ~/.ssh/bastion.key
+          echo "$SSH_KEY" > ~/.ssh/bastion.key
           chmod 400 ~/.ssh/bastion.key
           cat >>~/.ssh/config <<END
           Host bastion
@@ -33,6 +33,7 @@ jobs:
 
       - name: Deploy
         run: |
+          apt-get update -y && apt-get install openssh-client -y
           ssh bastion 'echo "$SSH_KEY_DOCKER_SERVER" > ~/.ssh/docker.pem;chmod 400 ~/.ssh/docker.pem'
           ssh bastion 'ssh -i ~/.ssh/docker.pem ubuntu@"$SSH_HOST_DOCKER_SERVER" "git clone https://github.com/ga905049/Teste-App.git; cd Teste-App/; docker build -t teste-backend -f Dockerfile.backend ./backend; docker build -t teste-frontend -f Dockerfile.frontend ./frontend;docker run -d -p5500:5500 teste-backend;docker run -d -p3000:3000 teste-frontend"'
         env:
