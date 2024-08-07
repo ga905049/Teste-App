@@ -38,6 +38,6 @@ jobs:
           ssh bastion 'ssh -i ~/.ssh/docker.pem ubuntu@"${{ secrets.SSH_HOST_DOCKER_SERVER }}" "curl -s -o /dev/null -I -w "%{http_code}" localhost:3000"'
           
       - name: Test App
-              run: |
-                ssh bastion 'echo "${{ secrets.SSH_KEY_DOCKER_SERVER }}" > ~/.ssh/docker.pem;chmod 600 ~/.ssh/docker.pem'
-                ssh bastion 'ssh -i ~/.ssh/docker.pem ubuntu@"${{ secrets.SSH_HOST_DOCKER_SERVER }}" "if [ $(curl -s -o /dev/null -I -w "%{http_code}" localhost:3000) -eq 200 ]; then echo "Aplicação funcionando"; else "echo Aplpicação com problemas" fi"'
+        run: |
+          ssh bastion 'echo "${{ secrets.SSH_KEY_DOCKER_SERVER }}" > ~/.ssh/docker.pem;chmod 600 ~/.ssh/docker.pem'
+          ssh bastion 'ssh -i ~/.ssh/docker.pem ubuntu@"${{ secrets.SSH_HOST_DOCKER_SERVER }}" "if [ $(curl -s -o /dev/null -I -w "%{http_code}" localhost:3000) -eq 200 ]; then echo "Aplicação funcionando"; else "echo Aplpicação com problemas" fi"'
